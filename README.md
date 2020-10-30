@@ -1,4 +1,5 @@
 ###Positional encoding basics
+
 Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat). Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work. Power equivalent of that scheme is about 2 logical elements, or 4 transistors with delay of two. (compare with 87 LE with about 4 logical funcion each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b). (multiply latest NVIDIA "nightmare" by 400-500).
 
 Also such type of scheme reduces memory load by two (for 4b scheme, only two bits change its value).
