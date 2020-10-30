@@ -10,5 +10,5 @@ See schematics in attached file.
 
 Can be useful in mobile GPU, server TPU and other things. Just make computations, before output to memory decode result into non-masked binary format. With heat of 4-5 transistors switches (for 2b,4b and so)
 
-###TODO:
+TODO:
 Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). Read articles about SRAM (or DRAM) that overheating.
