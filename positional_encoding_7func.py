@@ -6,10 +6,10 @@ op_names = ["add","sub","div","mul","pow","act_func","act_func_2_1"]
 #input registers
 width = 2;
 #maximum used commands in module (set to one for implement one function)
-op_count = 2;
+op_count = 1;
 maxnum=width;
 output_width = 2*width;
-maxoutputnum = 2*output_width;
+maxoutputnum = width*width;
 
 def op1(x, y):
 	return int(math.fmod(x+y,maxoutputnum))
