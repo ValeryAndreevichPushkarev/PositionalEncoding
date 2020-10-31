@@ -57,7 +57,7 @@ def formatOutputNum(x):
 
 	return 	result2+ result 
 header = """module """+op_names[0]+"""
-("""
+(\r\n"""
 for i in range(op_count):
 	header = header + "input wire " + op_names[i] +",\r\n"
 
