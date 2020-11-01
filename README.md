@@ -16,3 +16,5 @@ Minuses - about 4 times more memory consumption.
 
 TODO:
 Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). 
+
+Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so)
