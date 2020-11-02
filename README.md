@@ -19,5 +19,3 @@ TODO:
 Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). 
 
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
-
-Check power dissipation from 30 transistors that only has open Gate and no current true Drain Source (for 4b scheme).
