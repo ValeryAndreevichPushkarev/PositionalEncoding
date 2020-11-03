@@ -5,13 +5,13 @@ Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements co
 Power equivalent of that scheme is about 2 logical elements, or 4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)). 
 Copmuting with standart encoding takes 87 LE with about 4 logical funcion each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b.
 
-Also such type of scheme reduces memory load by four (for 4b scheme, only two bits change its value insted of ~8 in standart encoding).
+Also such type of scheme reduces memory load by four (for 4b scheme, only two bits change its value instead of ~8 in standart encoding).
 
 Transistor usage of scheme for is about the same.
 
 See schematics in attached file.
 
-Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 4 transistors switches or less (for 2b,4b and so).
+Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 4 transistors switches (for 2b,4b and so).
 
 Minuses - about 4 times more memory consumption.
 
