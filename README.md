@@ -14,7 +14,7 @@ See schematics in attached file.
 
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 4 transistors switches (for 2b,4b and so).
 
-Minuses - about 4 times more memory consumption.
+Minuses - about 4 times more memory consumption. (BTW, to get exaOP on 1 Ghz you need only 1 mb of sram, with about 1m blocks, so 4 mb of sram isnt problem)
 
 TODO:
 Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). 
