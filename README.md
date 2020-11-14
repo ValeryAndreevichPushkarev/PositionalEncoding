@@ -17,8 +17,6 @@ Can be useful in mobile GPU, server TPU and NPU and other things. Just make comp
 Minuses - about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 TODO:
-Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). 
-Check transistors that opens when two of two base(gate) pins is up.
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
 
 Add script to generate modules with 10-100 computation units (core),
