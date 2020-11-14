@@ -20,3 +20,6 @@ TODO:
 Supress check for too giant OR (limited by current, btw in that scheme only one input of OR is active). 
 Check transistors that opens when two of two base(gate) pins is up.
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
+
+Add script to generate modules with 10-100 computation units (core),
+Add script to generate 10-100 cores connected to one bus/memory block.
