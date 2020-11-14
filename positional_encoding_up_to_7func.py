@@ -4,9 +4,9 @@ import math
 #command names
 op_names = ["add","sub","div","mul","pow","act_func","act_func_2_1"]
 #input registers
-width = 2;
+width = 16;
 #maximum used commands in module (set to one for implement one function)
-op_count = 1;
+op_count = 4;
 maxnum=width;
 output_width = 2*width;
 maxoutputnum = width*width;
@@ -57,7 +57,7 @@ def formatOutputNum(x):
 
 	return 	result2+ result 
 header = """module """+op_names[0]+"""
-(\r\n"""
+("""
 for i in range(op_count):
 	header = header + "input wire " + op_names[i] +",\r\n"
 
@@ -71,57 +71,74 @@ header = header + """
 # Write the file out again
 with open('output.txt', 'w') as file:
 	file.write(header)
-	file.write("assign output_reg = {")
-	for bitnum in range(output_width):
-			has_any_one = 0
-			for i in range(maxnum):
+	for i in range(maxnum):
 				for j in range(maxnum):
-					op1_result = 0
-					op1_result = op1(i,j)
-					op2_result = 0
-					op2_result= op2(i,j)
-					op3_result = 0
-					op3_result= op3(i,j)
-					op4_result = 0
-					op4_result= op4(i,j)
-					op5_result = 0
-					op5_result= op5(i,j)
-					op6_result = 0
-					op6_result= op6(i,j)
-					op7_result = 0
-					op7_result= op7(i,j)
-
-					b_op1_result =  list(formatOutputNum(op1_result))
-					b_op2_result =  list(formatOutputNum(op2_result))
-					b_op3_result =  list(formatOutputNum(op3_result))
-					b_op4_result =  list(formatOutputNum(op4_result))
-					b_op5_result =  list(formatOutputNum(op5_result))
-					b_op6_result =  list(formatOutputNum(op6_result))
-					b_op7_result =  list(formatOutputNum(op7_result))
+					file.write("wire input_"+str(i)+"_"+str(j)+" = r1["+str(i)+"]&r2["+str(j)+"];\r\n")
 
 
-					op_results = [
-					b_op1_result[bitnum],
-					b_op2_result[bitnum],
-					b_op3_result[bitnum],
-					b_op4_result[bitnum],
-					b_op5_result[bitnum],
-					b_op6_result[bitnum],
-					b_op7_result[bitnum]]
-					
-					for command in range(op_count):
+	for command in range(op_count):
+		for bitnum in range(output_width):
+				has_any_one = 0
+				predicate = "wire command_" + op_names[command] +"_"+str(bitnum)+" = "
+				val = op_names[command]+"&("
+				for i in range(maxnum):
+					for j in range(maxnum):
+						op1_result = 0
+						op1_result = op1(i,j)
+						op2_result = 0
+						op2_result= op2(i,j)
+						op3_result = 0
+						op3_result= op3(i,j)
+						op4_result = 0
+						op4_result= op4(i,j)
+						op5_result = 0
+						op5_result= op5(i,j)
+						op6_result = 0
+						op6_result= op6(i,j)
+						op7_result = 0
+						op7_result= op7(i,j)
+
+						b_op1_result =  list(formatOutputNum(op1_result))
+						b_op2_result =  list(formatOutputNum(op2_result))
+						b_op3_result =  list(formatOutputNum(op3_result))
+						b_op4_result =  list(formatOutputNum(op4_result))
+						b_op5_result =  list(formatOutputNum(op5_result))
+						b_op6_result =  list(formatOutputNum(op6_result))
+						b_op7_result =  list(formatOutputNum(op7_result))
+
+
+						op_results = [
+						b_op1_result[bitnum],
+						b_op2_result[bitnum],
+						b_op3_result[bitnum],
+						b_op4_result[bitnum],
+						b_op5_result[bitnum],
+						b_op6_result[bitnum],
+						b_op7_result[bitnum]]
+						
+						
 						if (op_results[command]=='1'):
 
 							if (has_any_one==1):
-								file.write("|")
+								val = val +"|"
 							has_any_one = 1
 							#write a part of equation
 
-							file.write("r1["+str(i)+"]&r2["+str(j)+"]&"+op_names[command])
-			if (has_any_one):
-				file.write(",\r\n")
+							val = val + "input_"+str(i)+"_"+str(j)
+				if (has_any_one):
+					file.write(predicate+val + ");"+ "\r\n")
+				else:
+					file.write(predicate+" 0;\r\n")
 											
 
+	file.write("assign output_reg = {")
+	for bitnum in range(output_width):
+		for command in range(op_count):
+			file.write("command_" + op_names[command] +"_"+str(bitnum))
+			if (command!=op_count-1):
+				file.write("|")
+		file.write(",\r\n")
+			
 	file.write("}\r\nendmodule\r\n")
 with open('output.txt', 'r') as file :
   filedata = file.read()
