@@ -20,6 +20,11 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 
 2b transistors - 80 mb SRAM, control logic and circuits, and so.
 
+(TPD: switching of transistors in SRAM, and 40-80m transistors in computation module)
+
+(compare with 1,2 petaOps on Nvidia Ampere)
+
+
 TODO:
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
 Add signed versions of commands (replace add\sub with one command).
