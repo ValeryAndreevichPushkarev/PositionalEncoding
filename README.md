@@ -17,6 +17,7 @@ Can be useful in mobile GPU, server TPU and NPU and other things. Just make comp
 Minuses - about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz (delay of two transistor, plus sram)
+
 2b transistors - 80 mb SRAM, control logic and circuits, and so.
 
 TODO:
