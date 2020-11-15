@@ -1,4 +1,4 @@
-module mul
+module add
 (input wire add,
 input wire sub,
 input wire div,
@@ -424,4 +424,36 @@ command_add_28|command_sub_28|command_div_28|command_mul_28,
 command_add_29|command_sub_29|command_div_29|command_mul_29,
 command_add_30|command_sub_30|command_div_30|command_mul_30,
 command_add_31|command_sub_31|command_div_31|command_mul_31};
+endmodule
+module core_add(
+input wire [20:0]add,
+input wire [20:0]sub,
+input wire [20:0]div,
+input wire [20:0]mul,
+
+	input wire[320] r1_bus,
+	input wire[320] r2_bus,
+	
+	output wire[640] r_result_bus
+);
+add add0(add[0], sub[0], div[0], mul[0], r1_bus[16:0],r2_bus[16:0],r_result_bus[32:0])
+add add1(add[1], sub[1], div[1], mul[1], r1_bus[32:16],r2_bus[32:16],r_result_bus[64:32])
+add add2(add[2], sub[2], div[2], mul[2], r1_bus[48:32],r2_bus[48:32],r_result_bus[96:64])
+add add3(add[3], sub[3], div[3], mul[3], r1_bus[64:48],r2_bus[64:48],r_result_bus[128:96])
+add add4(add[4], sub[4], div[4], mul[4], r1_bus[80:64],r2_bus[80:64],r_result_bus[160:128])
+add add5(add[5], sub[5], div[5], mul[5], r1_bus[96:80],r2_bus[96:80],r_result_bus[192:160])
+add add6(add[6], sub[6], div[6], mul[6], r1_bus[112:96],r2_bus[112:96],r_result_bus[224:192])
+add add7(add[7], sub[7], div[7], mul[7], r1_bus[128:112],r2_bus[128:112],r_result_bus[256:224])
+add add8(add[8], sub[8], div[8], mul[8], r1_bus[144:128],r2_bus[144:128],r_result_bus[288:256])
+add add9(add[9], sub[9], div[9], mul[9], r1_bus[160:144],r2_bus[160:144],r_result_bus[320:288])
+add add10(add[10], sub[10], div[10], mul[10], r1_bus[176:160],r2_bus[176:160],r_result_bus[352:320])
+add add11(add[11], sub[11], div[11], mul[11], r1_bus[192:176],r2_bus[192:176],r_result_bus[384:352])
+add add12(add[12], sub[12], div[12], mul[12], r1_bus[208:192],r2_bus[208:192],r_result_bus[416:384])
+add add13(add[13], sub[13], div[13], mul[13], r1_bus[224:208],r2_bus[224:208],r_result_bus[448:416])
+add add14(add[14], sub[14], div[14], mul[14], r1_bus[240:224],r2_bus[240:224],r_result_bus[480:448])
+add add15(add[15], sub[15], div[15], mul[15], r1_bus[256:240],r2_bus[256:240],r_result_bus[512:480])
+add add16(add[16], sub[16], div[16], mul[16], r1_bus[272:256],r2_bus[272:256],r_result_bus[544:512])
+add add17(add[17], sub[17], div[17], mul[17], r1_bus[288:272],r2_bus[288:272],r_result_bus[576:544])
+add add18(add[18], sub[18], div[18], mul[18], r1_bus[304:288],r2_bus[304:288],r_result_bus[608:576])
+add add19(add[19], sub[19], div[19], mul[19], r1_bus[320:304],r2_bus[320:304],r_result_bus[640:608])
 endmodule
