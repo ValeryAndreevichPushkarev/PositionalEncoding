@@ -23,5 +23,4 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 TODO:
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
 Add signed versions of commands (replace add\sub with one command).
-Make script to compute division via linear combination of subcommands.
 Add script to generate 10-100 cores connected to one bus/memory block.
