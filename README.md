@@ -18,6 +18,6 @@ Minuses - about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz yo
 
 TODO:
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
-
-Add script to generate modules with 10-100 computation units (core),
+Add signed versions of commands (replace add\sub with one command).
+Make script to compute division via linear combination of subcommands.
 Add script to generate 10-100 cores connected to one bus/memory block.
