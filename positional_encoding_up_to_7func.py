@@ -159,39 +159,6 @@ with open('output.txt', 'w') as file:
   file.write(filedata)
 
 
-#	
-#
-#Writes code to generate module
-#
-#
-with open('output.txt', 'r') as file :
-  filedata = file.read()
-with open('output.txt', 'w') as file:
-	header = """module computationModule_"""+op_names[0] +"""(\r\n"""
-	header = header + """input wire clk,\r\n
-		
-
-	
-	output wire["""+str(2*width)+""":0] r_result_bus
-);
-reg["""+str(op_count)+""":0] op_selector = 1'b1;
-	reg["""+str(width)+""":0] r1 =1'b1;
-	reg["""+str(width)+""":0] r2 =1'b1;
-"""
-	header = header + op_names[0]+" computationModule (commands, r1_bus, r2_bus, r_result_bus);\r\n"
-	header = header + " always@(posedge clk)\r\nbegin\r\n"
-	header = header + "r1 <= {r1[0],"
-	for i in range(width-1):
-		header = header + "r1["+str(i)+"]"
-		if (i!=width-2):
-			header = header + ","
-	header = header+"};"
-
-	header = header + "end\r\n"
-	header = header + "endmodule\r\n"
-	file.write(filedata + header)
-	
-
 #
 #Write module with specified number of computation modules
 #
@@ -219,6 +186,71 @@ with open('output.txt', 'w') as file:
 	file.write(filedata + header)
 	
 
+#
+#
+#Writes code to generate one computation module
+#
+#
+
+
+with open('output.txt', 'r') as file :
+  filedata = file.read()
+with open('output.txt', 'w') as file:
+	busLen = width
+	header = """module module_generator_"""+op_names[0] +"""(\r\n
+	input wire clk,
+	output wire["""+str(2*width)+""":0] r_result
+);""" + "reg["+str(width)+":0] r1=1'b1;\r\n" + "reg["+str(width)+":0] r2=1'b1;\r\n"
+
+	
+	header = header + "	reg["+str(op_count)+":0] op_selector=1'b0001;\r\n"
+
+	header = header + op_names[0] +""" CM ("""
+	for i in range(op_count):
+		header = header + "op_selector["+str(i)+"],"
+	header = header + """r1,r2,r_result);"""
+	#generate states for first op_selector
+
+
+	header = header + """
+			always@(posedge clk)
+			begin
+"""
+	header = header + "r1<={r1[0],"""
+	for j in range(width-1):
+		header = header + """r1["""+str(width-j-1)+"""]"""
+		if j!= width-2:
+			header = header +","
+
+	header = header + "};"
+	header = header + """
+
+	if (r1["""+str(width-1)+"""]==1'b1)
+"""
+	header = header + "r2<={r2[0],"""
+	for j in range(width-1):
+		header = header + """r2["""+str(width-j-1)+"""]"""
+		if j!= width-2:
+			header = header +","
+
+	header = header + "};"
+	header = header + """
+	if (r2["""+str(width-1)+"""]==1'b1)
+"""
+	header = header + "op_selector<={op_selector[0],"""
+	for j in range(op_count-1):
+		header = header + """op_selector["""+str(op_count-j-1)+"""]"""
+		if j!= op_count-2:
+			header = header +","
+
+	header = header + "};"
+	header = header + """
+
+	end
+	"""
+	
+	header = header + "endmodule\r\n"
+	file.write(filedata + header)
 
 #	
 #
@@ -236,8 +268,8 @@ with open('output.txt', 'w') as file:
 	output wire["""+str(2*busLen)+""":0] r_result_bus
 );"""
 	for i in range (NumOfModules):
-		header = header + "reg["+str(width)+":0] r1"+str(i)+";"
-		header = header + "reg["+str(width)+":0] r2"+str(i)+";"
+		header = header + "reg["+str(width)+":0] r1"+str(i)+"=1'b1;"
+		header = header + "reg["+str(width)+":0] r2"+str(i)+"=1'b1;"
 
 	
 	for i in range(NumOfModules):
@@ -262,7 +294,7 @@ with open('output.txt', 'w') as file:
 		if (i!=NumOfModules-1):
 			header = header + ","
 
-	header = header +"});"
+	header = header +"},r_result_bus);"
 	#generate states for first op_selector
 
 	for i in range (NumOfModules):
