@@ -425,22 +425,6 @@ command_add_29|command_sub_29|command_div_29|command_mul_29,
 command_add_30|command_sub_30|command_div_30|command_mul_30,
 command_add_31|command_sub_31|command_div_31|command_mul_31};
 endmodule
-module computationModule_add(
-input wire clk,
-
-		
-
-	
-	output wire[32:0] r_result_bus
-);
-reg[4:0] op_selector = 1'b1;
-	reg[16:0] r1 =1'b1;
-	reg[16:0] r2 =1'b1;
-add computationModule (commands, r1_bus, r2_bus, r_result_bus);
- always@(posedge clk)
-begin
-r1 <= {r1[0],r1[0],r1[1],r1[2],r1[3],r1[4],r1[5],r1[6],r1[7],r1[8],r1[9],r1[10],r1[11],r1[12],r1[13],r1[14]};end
-endmodule
 module computationUnit_add(
 input wire [20:0]add,
 input wire [20:0]sub,
@@ -473,11 +457,30 @@ add add17(add[17], sub[17], div[17], mul[17], r1_bus[287:272],r2_bus[287:272],r_
 add add18(add[18], sub[18], div[18], mul[18], r1_bus[303:288],r2_bus[303:288],r_result_bus[607:576]);
 add add19(add[19], sub[19], div[19], mul[19], r1_bus[319:304],r2_bus[319:304],r_result_bus[639:608]);
 endmodule
+module module_generator_add(
+
+	input wire clk,
+	output wire[32:0] r_result
+);reg[16:0] r1=1'b1;
+reg[16:0] r2=1'b1;
+	reg[4:0] op_selector=1'b0001;
+add CM (op_selector[0],op_selector[1],op_selector[2],op_selector[3],r1,r2,r_result);
+			always@(posedge clk)
+			begin
+r1<={r1[0],r1[15],r1[14],r1[13],r1[12],r1[11],r1[10],r1[9],r1[8],r1[7],r1[6],r1[5],r1[4],r1[3],r1[2],r1[1]};
+
+	if (r1[15]==1'b1)
+r2<={r2[0],r2[15],r2[14],r2[13],r2[12],r2[11],r2[10],r2[9],r2[8],r2[7],r2[6],r2[5],r2[4],r2[3],r2[2],r2[1]};
+	if (r2[15]==1'b1)
+op_selector<={op_selector[0],op_selector[3],op_selector[2],op_selector[1]};
+
+	end
+	endmodule
 module core_generator_add(
 
 	input wire clk,
 	output wire[640:0] r_result_bus
-);reg[16:0] r10;reg[16:0] r20;reg[16:0] r11;reg[16:0] r21;reg[16:0] r12;reg[16:0] r22;reg[16:0] r13;reg[16:0] r23;reg[16:0] r14;reg[16:0] r24;reg[16:0] r15;reg[16:0] r25;reg[16:0] r16;reg[16:0] r26;reg[16:0] r17;reg[16:0] r27;reg[16:0] r18;reg[16:0] r28;reg[16:0] r19;reg[16:0] r29;reg[16:0] r110;reg[16:0] r210;reg[16:0] r111;reg[16:0] r211;reg[16:0] r112;reg[16:0] r212;reg[16:0] r113;reg[16:0] r213;reg[16:0] r114;reg[16:0] r214;reg[16:0] r115;reg[16:0] r215;reg[16:0] r116;reg[16:0] r216;reg[16:0] r117;reg[16:0] r217;reg[16:0] r118;reg[16:0] r218;reg[16:0] r119;reg[16:0] r219;	reg[4:0] op_selector0=1'b0001;
+);reg[16:0] r10=1'b1;reg[16:0] r20=1'b1;reg[16:0] r11=1'b1;reg[16:0] r21=1'b1;reg[16:0] r12=1'b1;reg[16:0] r22=1'b1;reg[16:0] r13=1'b1;reg[16:0] r23=1'b1;reg[16:0] r14=1'b1;reg[16:0] r24=1'b1;reg[16:0] r15=1'b1;reg[16:0] r25=1'b1;reg[16:0] r16=1'b1;reg[16:0] r26=1'b1;reg[16:0] r17=1'b1;reg[16:0] r27=1'b1;reg[16:0] r18=1'b1;reg[16:0] r28=1'b1;reg[16:0] r19=1'b1;reg[16:0] r29=1'b1;reg[16:0] r110=1'b1;reg[16:0] r210=1'b1;reg[16:0] r111=1'b1;reg[16:0] r211=1'b1;reg[16:0] r112=1'b1;reg[16:0] r212=1'b1;reg[16:0] r113=1'b1;reg[16:0] r213=1'b1;reg[16:0] r114=1'b1;reg[16:0] r214=1'b1;reg[16:0] r115=1'b1;reg[16:0] r215=1'b1;reg[16:0] r116=1'b1;reg[16:0] r216=1'b1;reg[16:0] r117=1'b1;reg[16:0] r217=1'b1;reg[16:0] r118=1'b1;reg[16:0] r218=1'b1;reg[16:0] r119=1'b1;reg[16:0] r219=1'b1;	reg[4:0] op_selector0=1'b0001;
 	reg[4:0] op_selector1=1'b0001;
 	reg[4:0] op_selector2=1'b0001;
 	reg[4:0] op_selector3=1'b0001;
@@ -497,7 +500,7 @@ module core_generator_add(
 	reg[4:0] op_selector17=1'b0001;
 	reg[4:0] op_selector18=1'b0001;
 	reg[4:0] op_selector19=1'b0001;
-computationUnit_add CU ({op_selector0[0],op_selector1[0],op_selector2[0],op_selector3[0],op_selector4[0],op_selector5[0],op_selector6[0],op_selector7[0],op_selector8[0],op_selector9[0],op_selector10[0],op_selector11[0],op_selector12[0],op_selector13[0],op_selector14[0],op_selector15[0],op_selector16[0],op_selector17[0],op_selector18[0],op_selector19[0]},{op_selector0[1],op_selector1[1],op_selector2[1],op_selector3[1],op_selector4[1],op_selector5[1],op_selector6[1],op_selector7[1],op_selector8[1],op_selector9[1],op_selector10[1],op_selector11[1],op_selector12[1],op_selector13[1],op_selector14[1],op_selector15[1],op_selector16[1],op_selector17[1],op_selector18[1],op_selector19[1]},{op_selector0[2],op_selector1[2],op_selector2[2],op_selector3[2],op_selector4[2],op_selector5[2],op_selector6[2],op_selector7[2],op_selector8[2],op_selector9[2],op_selector10[2],op_selector11[2],op_selector12[2],op_selector13[2],op_selector14[2],op_selector15[2],op_selector16[2],op_selector17[2],op_selector18[2],op_selector19[2]},{op_selector0[3],op_selector1[3],op_selector2[3],op_selector3[3],op_selector4[3],op_selector5[3],op_selector6[3],op_selector7[3],op_selector8[3],op_selector9[3],op_selector10[3],op_selector11[3],op_selector12[3],op_selector13[3],op_selector14[3],op_selector15[3],op_selector16[3],op_selector17[3],op_selector18[3],op_selector19[3]},{r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r110,r111,r112,r113,r114,r115,r116,r117,r118,r119},{r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r210,r211,r212,r213,r214,r215,r216,r217,r218,r219});
+computationUnit_add CU ({op_selector0[0],op_selector1[0],op_selector2[0],op_selector3[0],op_selector4[0],op_selector5[0],op_selector6[0],op_selector7[0],op_selector8[0],op_selector9[0],op_selector10[0],op_selector11[0],op_selector12[0],op_selector13[0],op_selector14[0],op_selector15[0],op_selector16[0],op_selector17[0],op_selector18[0],op_selector19[0]},{op_selector0[1],op_selector1[1],op_selector2[1],op_selector3[1],op_selector4[1],op_selector5[1],op_selector6[1],op_selector7[1],op_selector8[1],op_selector9[1],op_selector10[1],op_selector11[1],op_selector12[1],op_selector13[1],op_selector14[1],op_selector15[1],op_selector16[1],op_selector17[1],op_selector18[1],op_selector19[1]},{op_selector0[2],op_selector1[2],op_selector2[2],op_selector3[2],op_selector4[2],op_selector5[2],op_selector6[2],op_selector7[2],op_selector8[2],op_selector9[2],op_selector10[2],op_selector11[2],op_selector12[2],op_selector13[2],op_selector14[2],op_selector15[2],op_selector16[2],op_selector17[2],op_selector18[2],op_selector19[2]},{op_selector0[3],op_selector1[3],op_selector2[3],op_selector3[3],op_selector4[3],op_selector5[3],op_selector6[3],op_selector7[3],op_selector8[3],op_selector9[3],op_selector10[3],op_selector11[3],op_selector12[3],op_selector13[3],op_selector14[3],op_selector15[3],op_selector16[3],op_selector17[3],op_selector18[3],op_selector19[3]},{r10,r11,r12,r13,r14,r15,r16,r17,r18,r19,r110,r111,r112,r113,r114,r115,r116,r117,r118,r119},{r20,r21,r22,r23,r24,r25,r26,r27,r28,r29,r210,r211,r212,r213,r214,r215,r216,r217,r218,r219},r_result_bus);
 					always@(posedge clk)
 					begin
 r10<={r10[0],r10[15],r10[14],r10[13],r10[12],r10[11],r10[10],r10[9],r10[8],r10[7],r10[6],r10[5],r10[4],r10[3],r10[2],r10[1]};
