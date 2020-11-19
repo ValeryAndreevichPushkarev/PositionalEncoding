@@ -1,4 +1,4 @@
-Positional encoding basics
+# Positional encoding basics
 
 Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat). Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work (usage of OR element in ouptut). 
 (See PositionalEncoding_3b_add_module_oneOperation.png)
@@ -10,29 +10,26 @@ Also such type of scheme reduces memory load by four (for 4b scheme, only two bi
 
 Transistor usage of scheme for is about the same.
 
-See schematics in attached file.
+### See schematics in attached file.
 
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
 
-Minuses - about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
+## Minuses 
+about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 
 
-One block power consumption (Quartus PowerAnalyzer, 2Ghz):
+## One block power consumption (Quartus PowerAnalyzer, 2Ghz):
 
-Total power - 213 mw
+### Total power - 213 mw
 
-Dynamic power - 115 mW
+### Dynamic power - 115 mW
 
-Routing termal dynamic power - 97 mW
+### Routing termal dynamic power - 97 mW
 
-I/O power consumption:
+## I/O power consumption:
 
-I/O Thermal Power Dissipation	473.69 mW
-
-
-
-
+### I/O Thermal Power Dissipation	473.69 mW
 
 That is two times less that power dissipation on output pins
 
@@ -45,7 +42,7 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 (compare with 1,2 petaOps on Nvidia Ampere)
 
 
-TODO:
+### TODO:
 Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
 Add signed versions of commands (replace add\sub with one command. add, mul, div for 4 bit numbers).
 
