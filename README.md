@@ -19,7 +19,6 @@ Can be useful in mobile GPU, server TPU and NPU and other things. Just make comp
 about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 
-
 ### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 2Ghz,  Cyclone IV):
 
 **Total power - 213 mw**
