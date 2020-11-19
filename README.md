@@ -14,12 +14,12 @@ Transistor usage of scheme for is about the same.
 
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
 
-## Minuses 
+### Minuses 
 about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 
 
-## One block power consumption (Quartus PowerAnalyzer, 2Ghz):
+### One block power consumption (Quartus PowerAnalyzer, 2Ghz,  Cyclone IV):
 
 **Total power - 213 mw**
 
@@ -27,7 +27,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 **Routing termal dynamic power - 97 mW**
 
-## I/O power consumption:
+### I/O power consumption:
 
 **I/O Thermal Power Dissipation	473.69 mW**
 
