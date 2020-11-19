@@ -1,4 +1,4 @@
-# Positional encoding basics
+## Positional encoding basics
 
 Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat). Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work (usage of OR element in ouptut). 
 (See PositionalEncoding_3b_add_module_oneOperation.png)
