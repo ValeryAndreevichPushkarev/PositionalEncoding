@@ -21,15 +21,15 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 ## One block power consumption (Quartus PowerAnalyzer, 2Ghz):
 
-**Total power - 213 mw
+**Total power - 213 mw**
 
-**Dynamic power - 115 mW
+**Dynamic power - 115 mW**
 
-**Routing termal dynamic power - 97 mW
+**Routing termal dynamic power - 97 mW**
 
 ## I/O power consumption:
 
-**I/O Thermal Power Dissipation	473.69 mW
+**I/O Thermal Power Dissipation	473.69 mW**
 
 That is two times less that power dissipation on output pins
 
