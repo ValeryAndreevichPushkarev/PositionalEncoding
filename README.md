@@ -16,6 +16,8 @@ Can be useful in mobile GPU, server TPU and NPU and other things. Just make comp
 
 Minuses - about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
+
+
 One block power consumption (Quartus PowerAnalyzer, 2Ghz):
 
 Total power - 213 mw
@@ -27,6 +29,8 @@ Routing termal dynamic power - 97 mW
 I/O power consumption:
 
 I/O Thermal Power Dissipation	473.69 mW
+
+
 
 
 
