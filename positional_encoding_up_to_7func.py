@@ -7,8 +7,11 @@ op_names = ["add","sub","div","mul","pow","act_func","act_func_2_1"]
 width = 16;
 #maximum used commands in module (set to one for implement one function)
 op_count = 4;
-#Number of modules in one computation core
+#Number of modules in one computation Unit (heght)
 NumOfModules = 20
+#TODO:
+##Number of Units in one computation Core (width)
+#NumOfUnits = 10
 
 maxnum=width;
 output_width = 2*width;
@@ -155,91 +158,166 @@ with open('output.txt', 'w') as file:
 with open('output.txt', 'w') as file:
   file.write(filedata)
 
+
+#	
+#
+#Writes code to generate module
+#
+#
+with open('output.txt', 'r') as file :
+  filedata = file.read()
+with open('output.txt', 'w') as file:
+	header = """module computationModule_"""+op_names[0] +"""(\r\n"""
+	header = header + """input wire clk,\r\n
+		
+
+	
+	output wire["""+str(2*width)+""":0] r_result_bus
+);
+reg["""+str(op_count)+""":0] op_selector = 1'b1;
+	reg["""+str(width)+""":0] r1 =1'b1;
+	reg["""+str(width)+""":0] r2 =1'b1;
+"""
+	header = header + op_names[0]+" computationModule (commands, r1_bus, r2_bus, r_result_bus);\r\n"
+	header = header + " always@(posedge clk)\r\nbegin\r\n"
+	header = header + "r1 <= {r1[0],"
+	for i in range(width-1):
+		header = header + "r1["+str(i)+"]"
+		if (i!=width-2):
+			header = header + ","
+	header = header+"};"
+
+	header = header + "end\r\n"
+	header = header + "endmodule\r\n"
+	file.write(filedata + header)
+	
+
 #
 #Write module with specified number of computation modules
+#
+with open('output.txt', 'r') as file :
+  filedata = file.read()
+with open('output.txt', 'w') as file:
+	header = """module computationUnit_"""+op_names[0] +"""(\r\n"""
+	for i in range(op_count):
+		header = header + "input wire ["+str(NumOfModules)+":0]" + op_names[i] +",\r\n"
+
+	header = header + """
+	input wire["""+str(width*NumOfModules)+""":0] r1_bus,
+	input wire["""+str(width*NumOfModules)+""":0] r2_bus,
+	
+	output wire["""+str(2*width*NumOfModules)+""":0] r_result_bus
+);\r\n"""
+	for i in range(NumOfModules):
+		header = header + op_names[0]+ " " + op_names[0]+str(i)+"("
+		for j in range(op_count):
+			header = header + op_names[j] + "["+str(i)+"], "
+		header = header + "r1_bus["+str((i+1)*width-1)+":"+str(i*width)+"],"
+		header = header + "r2_bus["+str((i+1)*width-1)+":"+str(i*width)+"],"
+		header = header + "r_result_bus["+str((i+1)*2*width-1)+":"+str(i*2*width)+"]);\r\n"
+	header = header + "endmodule\r\n"
+	file.write(filedata + header)
+	
+
+
+#	
+#
+#Writes code to generate Computation units
+#
 #
 
 
 with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
-	header = """module core_"""+op_names[0] +"""(\r\n"""
-	for i in range(op_count):
-		header = header + "input wire ["+str(NumOfModules)+":0]" + op_names[i] +",\r\n"
+	busLen = width*NumOfModules
+	header = """module core_generator_"""+op_names[0] +"""(\r\n
+	input wire clk,
+	output wire["""+str(2*busLen)+""":0] r_result_bus
+);"""
+	for i in range (NumOfModules):
+		header = header + "reg["+str(width)+":0] r1"+str(i)+";"
+		header = header + "reg["+str(width)+":0] r2"+str(i)+";"
 
-	header = header + """
-	input wire["""+str(width*NumOfModules)+"""] r1_bus,
-	input wire["""+str(width*NumOfModules)+"""] r2_bus,
 	
-	output wire["""+str(2*width*NumOfModules)+"""] r_result_bus
-);\r\n"""
 	for i in range(NumOfModules):
-		header = header + op_names[0]+ " " + op_names[0]+str(i)+"("
-		for j in range(op_count):
-			header = header + op_names[j] + "["+str(i)+"], "
-		header = header + "r1_bus["+str((i+1)*width)+":"+str(i*width)+"],"
-		header = header + "r2_bus["+str((i+1)*width)+":"+str(i*width)+"],"
-		header = header + "r_result_bus["+str((i+1)*2*width)+":"+str(i*2*width)+"])\r\n"
+		header = header + "	reg["+str(op_count)+":0] op_selector"+str(i)+"=1'b0001;\r\n"
+
+	header = header + """computationUnit_"""+op_names[0] +""" CU ("""
+	for j in range(op_count):
+		header = header + "{"
+		for i in range(NumOfModules):
+			header = header + "op_selector"+str(i)+"["+str(j)+"]"
+			if (i!=NumOfModules-1):
+				header = header + ","
+		header = header + "},"
+	header = header +"{"
+	for i in range (NumOfModules):
+		header = header + "r1"+str(i)
+		if (i!=NumOfModules-1):
+			header = header + ","
+	header = header + "},{"
+	for i in range (NumOfModules):
+		header = header + "r2"+str(i)
+		if (i!=NumOfModules-1):
+			header = header + ","
+
+	header = header +"});"
+	#generate states for first op_selector
+
+	for i in range (NumOfModules):
+		if (i==0):
+			header = header + """
+					always@(posedge clk)
+					begin
+"""
+		else:
+			header = header + """
+					always@(posedge r2"""+str(i-1)+"""["""+str(width-1)+"""])
+					begin
+"""
+		header = header + "r1"+str(i)+"<={r1"""+str(i)+"""[0],"""
+		for j in range(width-1):
+			header = header + """r1"""+str(i)+"""["""+str(width-j-1)+"""]"""
+			if j!= width-2:
+				header = header +","
+
+		header = header + "};"
+		header = header + """
+
+		if (r1"""+str(i)+"""["""+str(width-1)+"""]==1'b1)
+"""
+		header = header + "r2"+str(i)+"<={r2"""+str(i)+"""[0],"""
+		for j in range(width-1):
+			header = header + """r2"""+str(i)+"""["""+str(width-j-1)+"""]"""
+			if j!= width-2:
+				header = header +","
+
+		header = header + "};"
+		header = header + """
+		if (r2"""+str(i)+"""["""+str(width-1)+"""]==1'b1)
+"""
+		header = header + "op_selector"+str(i)+"<={op_selector"""+str(i)+"""[0],"""
+		for j in range(op_count-1):
+			header = header + """op_selector"""+str(i)+"""["""+str(op_count-j-1)+"""]"""
+			if j!= op_count-2:
+				header = header +","
+
+		header = header + "};"
+		header = header + """
+
+	end
+	"""
+	
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
-	
+
 #
-#Write module with specified number of Core modules
-#Add fp16 TPU processes, add NPU activation functions
-#NumOfCores = 4
+#Write module with specified number of computation units
 #
-#with open('output.txt', 'r') as file :
-#	filedata = file.read()
-#with open('output.txt', 'w') as file:
-#	header = """module TPU_"""+op_names[0] +"""(\r\n"""
-#	for i in range(op_count):
-#		header = header + "input wire " + op_names[i] +",\r\n"
-#
-#	header = header + """
-#	input wire["""+str(width*NumOfModules*NumOfCores)+"""] r1_bus,
-#	input wire["""+str(width*NumOfModules*NumOfCores)+"""] r2_bus,
-#	
-#	output wire["""+str(2*width*NumOfModules)+"""] r_result_bus
-#);\r\n"""
-#
-#	for i in range(NumOfModules):
-#		header = header + op_names[0]+ " " + op_names[0]+str(i)+"("
-#		for j in range(op_count):
-#			header = header + op_names[j] + ", "
-#		header = header + "r1_bus["+str((i+1)*width)+":"+str(i*width)+"],"
-#		header = header + "r2_bus["+str((i+1)*width)+":"+str(i*width)+"],"
-#		header = header + "r_result_bus["+str((i+1)*2*width)+":"+str(i*2*width)+"])\r\n"
-#	header = header + "endmodule\r\n"
-#	file.write(filedata + header)
-#
-#
-#
+
 #Write sram memory block's
 #source sram, dest sram, module thats change two blocks after computation complete and change wirings according to bitness )
 #
 
-#header = """
-#module ram
-#
-#(
-#	input clk, 
-#	input ["""+str(2*width*NumOfModules)+""":0] output_data, 
-#					 
-#	output wire["""+str(width*NumOfModules)+""":0] r1_data,
-#	output wire["""+str(width*NumOfModules)+""":0] r2_data,
-#);
-			
-#reg ["""str(2*width*NumOfModules)+""":0] mod1;
-#reg ["""+str(2*width*NumOfModules)+""":0] mod2;
-#reg [1:0] active_bank;
-
-#always @ (posedge clk ) 
-#begin
-#		mem[write_addr] <= data;
-#		requested <= mem[read_addr];//mem[(read_height*width+read_width)*(~screen+1)]; 
-#end
-#endmodule
-#"""
-
-#	file.write(filedata + header);
 	
