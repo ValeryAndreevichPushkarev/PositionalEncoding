@@ -1,6 +1,7 @@
 ## Positional encoding basics
 
 Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat). Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work (usage of OR element in ouptut). 
+
 ![add operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_add_module.png)
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
 
@@ -26,6 +27,9 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 **Dynamic power - 115 mW**
 
 **Routing termal dynamic power - 97 mW**
+
+![i\o pin schematics operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/power_overview.gif)
+
 
 ### I/O power consumption:
 
