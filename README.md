@@ -30,8 +30,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 ### I/O power consumption:
 
 **I/O Thermal Power Dissipation	473.69 mW**
-
-That is two times less that power dissipation on output pins
+**I/O Thermal Dynamic Power 449.29 mW**
 
 To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz (delay of two transistor, plus sram)
 
