@@ -54,5 +54,4 @@ Add Floating point versions of commands (first n-th significant bits, exponentio
 
 Add modules to convert from/into positional encoding.
 
-Change formatting in ComputationUnits and ComputationUnitsGenerator.
 Add script to generate 10-100 cores connected to one bus/memory block.
