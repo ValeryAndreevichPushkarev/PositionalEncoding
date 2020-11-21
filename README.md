@@ -12,8 +12,6 @@ Also such type of scheme reduces memory load by four (for 4b scheme, only two bi
 
 Transistor usage of scheme for is about the same.
 
-### See schematics in attached file.
-
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
 
 ### Minuses 
