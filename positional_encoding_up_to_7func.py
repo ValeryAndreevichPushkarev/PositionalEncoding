@@ -63,14 +63,15 @@ def formatOutputNum(x):
 
 	return 	result2+ result 
 header = """module """+op_names[0]+"""
-("""
+(
+"""
 for i in range(op_count):
-	header = header + "input wire " + op_names[i] +",\r\n"
+	header = header + "	input wire " + op_names[i] +",\r\n"
 
 header = header + """
-	 input wire[""" +str(width)+ """:0] r1,
-	 input wire[""" +str(width)+ """:0] r2,
-	 output wire[""" +str(output_width)+ """:0] output_reg
+	input wire[""" +str(width)+ """:0] r1,
+	input wire[""" +str(width)+ """:0] r2,
+	output wire[""" +str(output_width)+ """:0] output_reg
 );
 """
 
@@ -160,14 +161,17 @@ with open('output.txt', 'w') as file:
 
 
 #
-#Write module with specified number of computation modules
+#Write computation unit with specified number of computation modules
+#TODO: add 4-8 int 16-32 float operations instead of command_name lines
 #
 with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
-	header = """module computationUnit_"""+op_names[0] +"""(\r\n"""
+	header = """module computationUnit_"""+op_names[0] +"""
+(
+"""
 	for i in range(op_count):
-		header = header + "input wire ["+str(NumOfModules)+":0]" + op_names[i] +",\r\n"
+		header = header + "	input wire ["+str(NumOfModules)+":0]" + op_names[i] +",\r\n"
 
 	header = header + """
 	input wire["""+str(width*NumOfModules)+""":0] r1_bus,
@@ -197,15 +201,15 @@ with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
 	busLen = width
-	header = """module module_generator_"""+op_names[0] +"""(\r\n
+	header = """module module_generator_"""+op_names[0] +"""
+(
 	input wire clk,
 	output wire["""+str(2*width)+""":0] r_result
-);""" + "reg["+str(width)+":0] r1=1'b1;\r\n" + "reg["+str(width)+":0] r2=1'b1;\r\n"
-
-	
-	header = header + "	reg["+str(op_count)+":0] op_selector=1'b0001;\r\n"
-
-	header = header + op_names[0] +""" CM ("""
+);
+reg["""+str(width)+""":0] r1=1'b1;
+reg["""+str(width)+""":0] r2=1'b1;
+reg["""+str(op_count)+""":0] op_selector=1'b0001;
+""" + op_names[0] +""" CM ("""
 	for i in range(op_count):
 		header = header + "op_selector["+str(i)+"],"
 	header = header + """r1,r2,r_result);"""
@@ -213,10 +217,10 @@ with open('output.txt', 'w') as file:
 
 
 	header = header + """
-			always@(posedge clk)
-			begin
+always@(posedge clk)
+begin
 """
-	header = header + "r1<={r1[0],"""
+	header = header + "	r1<={r1[0],"""
 	for j in range(width-1):
 		header = header + """r1["""+str(width-j-1)+"""]"""
 		if j!= width-2:
@@ -227,7 +231,7 @@ with open('output.txt', 'w') as file:
 
 	if (r1["""+str(width-1)+"""]==1'b1)
 """
-	header = header + "r2<={r2[0],"""
+	header = header + "		r2<={r2[0],"""
 	for j in range(width-1):
 		header = header + """r2["""+str(width-j-1)+"""]"""
 		if j!= width-2:
@@ -237,7 +241,7 @@ with open('output.txt', 'w') as file:
 	header = header + """
 	if (r2["""+str(width-1)+"""]==1'b1)
 """
-	header = header + "op_selector<={op_selector[0],"""
+	header = header + "		op_selector<={op_selector[0],"""
 	for j in range(op_count-1):
 		header = header + """op_selector["""+str(op_count-j-1)+"""]"""
 		if j!= op_count-2:
@@ -246,15 +250,15 @@ with open('output.txt', 'w') as file:
 	header = header + "};"
 	header = header + """
 
-	end
-	"""
+end
+"""
 	
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
 
 #	
 #
-#Writes code to generate Computation units
+#Writes code to generate one computation unit
 #
 #
 
@@ -263,17 +267,19 @@ with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
 	busLen = width*NumOfModules
-	header = """module core_generator_"""+op_names[0] +"""(\r\n
+	header = """module core_generator_"""+op_names[0] +"""
+(
 	input wire clk,
 	output wire["""+str(2*busLen)+""":0] r_result_bus
-);"""
+);
+"""
 	for i in range (NumOfModules):
-		header = header + "reg["+str(width)+":0] r1"+str(i)+"=1'b1;"
-		header = header + "reg["+str(width)+":0] r2"+str(i)+"=1'b1;"
+		header = header + "reg["+str(width)+":0] r1"+str(i)+"=1'b1;\r\n"
+		header = header + "reg["+str(width)+":0] r2"+str(i)+"=1'b1;\r\n"
 
 	
 	for i in range(NumOfModules):
-		header = header + "	reg["+str(op_count)+":0] op_selector"+str(i)+"=1'b0001;\r\n"
+		header = header + "reg["+str(op_count)+":0] op_selector"+str(i)+"=1'b0001;\r\n"
 
 	header = header + """computationUnit_"""+op_names[0] +""" CU ("""
 	for j in range(op_count):
@@ -300,36 +306,33 @@ with open('output.txt', 'w') as file:
 	for i in range (NumOfModules):
 		if (i==0):
 			header = header + """
-					always@(posedge clk)
-					begin
+
+always@(posedge clk)
+begin
 """
 		else:
 			header = header + """
-					always@(posedge r2"""+str(i-1)+"""["""+str(width-1)+"""])
-					begin
+always@(posedge r2"""+str(i-1)+"""["""+str(width-1)+"""])
+begin
 """
-		header = header + "r1"+str(i)+"<={r1"""+str(i)+"""[0],"""
+		header = header + "	r1"+str(i)+"<={r1"""+str(i)+"""[0],"""
 		for j in range(width-1):
 			header = header + """r1"""+str(i)+"""["""+str(width-j-1)+"""]"""
 			if j!= width-2:
 				header = header +","
 
-		header = header + "};"
-		header = header + """
+		header = header + "};\r\n"
+		header = header + """	if (r1"""+str(i)+"""["""+str(width-1)+"""]==1'b1)\r\n"""
 
-		if (r1"""+str(i)+"""["""+str(width-1)+"""]==1'b1)
-"""
-		header = header + "r2"+str(i)+"<={r2"""+str(i)+"""[0],"""
+		header = header + "		r2"+str(i)+"<={r2"""+str(i)+"""[0],"""
 		for j in range(width-1):
 			header = header + """r2"""+str(i)+"""["""+str(width-j-1)+"""]"""
 			if j!= width-2:
 				header = header +","
 
-		header = header + "};"
-		header = header + """
-		if (r2"""+str(i)+"""["""+str(width-1)+"""]==1'b1)
-"""
-		header = header + "op_selector"+str(i)+"<={op_selector"""+str(i)+"""[0],"""
+		header = header + "};\r\n"
+		header = header + """	if (r2"""+str(i)+"""["""+str(width-1)+"""]==1'b1)\r\n"""
+		header = header + "		op_selector"+str(i)+"<={op_selector"""+str(i)+"""[0],"""
 		for j in range(op_count-1):
 			header = header + """op_selector"""+str(i)+"""["""+str(op_count-j-1)+"""]"""
 			if j!= op_count-2:
@@ -338,8 +341,8 @@ with open('output.txt', 'w') as file:
 		header = header + "};"
 		header = header + """
 
-	end
-	"""
+end
+"""
 	
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
@@ -351,5 +354,3 @@ with open('output.txt', 'w') as file:
 #Write sram memory block's
 #source sram, dest sram, module thats change two blocks after computation complete and change wirings according to bitness )
 #
-
-	
