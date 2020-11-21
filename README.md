@@ -47,7 +47,6 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 
 
 ### TODO:
-Check different methods to merge N to 1 signals like OR. (use pulldown resistors in AND, and so).
 Add signed versions of commands (replace add\sub with one command. add, mul, div for 4 bit numbers).
 
 Add Floating point versions of commands (first n-th significant bits, exponentional part) or make separate module.
