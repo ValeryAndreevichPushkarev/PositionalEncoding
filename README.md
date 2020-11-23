@@ -14,6 +14,18 @@ Transistor usage of scheme for is about the same.
 
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
 
+### Does it fits into thermal\timing characteristics
+One operation perfoms with delay of two transistor switching, plus memory, that allow to use frequency 4-8 Ghz. 
+
+To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz.
+
+2b transistors - 80 mb SRAM, control logic and circuits, and so.
+
+For example, Groq has 80 TB\s on-die memory bandwidth, that is equals to 80-160 petaOp (by power characteristics).
+
+Total: About 160 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
+
+
 ### Minuses 
 about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
