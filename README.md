@@ -17,11 +17,7 @@ Can be useful in mobile GPU, server TPU and NPU and other things. Just make comp
 ### Does it fits into thermal\timing characteristics
 One operation perfoms with delay of two transistor switching, plus memory, that allow to use frequency 4-8 Ghz. 
 
-To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz.
-
-2b transistors - 80 mb SRAM, control logic and circuits, and so.
-
-Total: About 160 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
+Total: About 20 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
 
 
 ### Minuses 
