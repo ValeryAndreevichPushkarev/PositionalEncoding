@@ -21,8 +21,6 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz.
 
 2b transistors - 80 mb SRAM, control logic and circuits, and so.
 
-For example, Groq has 80 TB\s on-die memory bandwidth, that is equals to 80-160 petaOp (by power characteristics).
-
 Total: About 160 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
 
 
