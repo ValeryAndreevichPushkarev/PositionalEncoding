@@ -5,17 +5,17 @@ Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements co
 ![add operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_add_module.png)
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
 
-Power equivalent of that scheme is about 1-2 logical elements, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)). 
+Power equivalent of that scheme **is about 1-2 logical elements**, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)). 
 Computing with standart encoding takes 87 LE with about 4 logical block each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b.
 
-Also such type of scheme reduces memory load by four (for 4b scheme, only two bits change its value instead of ~8 in standart encoding).
+Also such type of scheme **reduces memory load by four** (for 4b scheme, only two bits change its value instead of ~8 in standart encoding).
 
 Transistor usage of scheme for is about the same.
 
 Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
 
 ### Does it fits into thermal\timing characteristics
-One operation perfoms with delay of two transistor switching, plus memory, that allow to use frequency 4-8 Ghz. 
+One operation perfoms with **delay of two transistor switching**, plus memory, that allow to use frequency 4-8 Ghz. 
 
 Total: About 20 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
 
