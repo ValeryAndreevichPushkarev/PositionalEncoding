@@ -53,7 +53,7 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 ### TODO:
 Add signed versions of commands (replace add\sub with one command. add, mul, div for 4 bit numbers).
 
-Check other schematics to merge N-1 signals like OR (usage of pulldown resistors and so).
+Check other schematics to merge N-1 signals like OR (usage of pulldown resistors and so, for 1 operation schematics didnt fit because of current limits for OR output, but in this type of scheme only 1 input of OR is active).
 
 Add Floating point versions of commands (first n-th significant bits, exponentional part) or make separate module.
 
