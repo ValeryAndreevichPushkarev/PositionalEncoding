@@ -24,7 +24,7 @@ Total: About 20 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acc
 about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 
-### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 2Ghz,  Cyclone IV,  optimized 60-nm low-power process):
+### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 1 Ghz,  Cyclone IV,  optimized 60-nm low-power process):
 
 **Total power - 18.9 mw**
 
