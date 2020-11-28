@@ -5,7 +5,7 @@ Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements co
 ![add operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_add_module.png)
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
 
-Power equivalent of that scheme **is about 1-2 logical elements**, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)). That is **equals to DARPA TrueNorth synaptic operation**.
+Power equivalent of that scheme **is about 1-2 logical elements**, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)).
 Computing with standart encoding takes 87 LE with about 4 logical block each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b.
 
 Also such type of scheme **reduces memory load by four** (for 4b scheme, only two bits change its value instead of ~8 in standart encoding).
