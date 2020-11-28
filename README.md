@@ -26,20 +26,20 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 ### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 2Ghz,  Cyclone IV,  optimized 60-nm low-power process):
 
-**Total power - 213 mw**
+**Total power - 0 mw**
 
-**Dynamic power - 115 mW**
+**Dynamic power - 0 mW**
 
-**Routing termal dynamic power - 97 mW**
+**Routing termal dynamic power - 0 mW**
 
 ![i\o pin schematics operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/power_overview.gif)
 
 
 ### I/O power consumption:
 
-**I/O Thermal Power Dissipation	473.69 mW**
+**I/O Thermal Power Dissipation	26.28 mW**
 
-**I/O Thermal Dynamic Power 449.29 mW**
+**I/O Thermal Dynamic Power 18.21 mW**
 
 To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz (delay of two transistor, plus sram)
 
