@@ -34,14 +34,6 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 **Routing termal dynamic power - 8.52 mW**
 
-![i\o pin schematics operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/power_overview.gif)
-
-
-### I/O power consumption:
-
-**I/O Thermal Power Dissipation	50.84 mW**
-
-**I/O Thermal Dynamic Power 41.43 mW**
 
 To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz (delay of two transistor, plus sram)
 
