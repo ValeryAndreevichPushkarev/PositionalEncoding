@@ -6,7 +6,7 @@ Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements co
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
 
 Power equivalent of that scheme **is about 1-2 logical elements**, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)).
-Computing with standart encoding takes 87 LE with about 4 logical block each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b.
+Computing with standart encoding takes 87 LE with about 4 logical block each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b. Or at least more than two logical elements.
 
 Also such type of scheme **reduces memory load by two** (for 4b scheme, only 4 output bits change its value instead of ~8 in standart encoding).
 
@@ -26,7 +26,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 ### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 1 Ghz,  Cyclone IV,  optimized 60-nm low-power process):
 
-(power consumption with pulldown resistors at least 6 times less that that value)
+(may be not representative)
 
 **Total power - 18.9 mw**
 
