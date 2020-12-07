@@ -28,11 +28,11 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 (may be not representative)
 
-**Total power - 18.9 mw**
+**Total power - 0.45 mw**
 
-**Dynamic power - 10.38 mW**
+**Dynamic power - 0.43 mW**
 
-**Routing termal dynamic power - 8.52 mW**
+**Routing termal dynamic power - 0.02 mW**
 
 
 To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz (delay of two transistor, plus sram)
