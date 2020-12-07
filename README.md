@@ -26,7 +26,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 ### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 1 Ghz,  Cyclone IV,  optimized 60-nm low-power process):
 
-(may be not representative)
+(may be not representative, in original schematics its about 50-100 times smaller)
 
 **Total power - 0.45 mw**
 
