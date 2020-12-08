@@ -12,7 +12,7 @@ Also such type of scheme **reduces memory load by two** (for 4b scheme, only 4 o
 
 Transistor usage of scheme for is about the same.
 
-Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so).
+Can be useful in mobile GPU, server TPU and NPU and other things. Just make computations, before output to memory decode result into standart binary encoding. With heat of 2-4 transistors switches (for 2b,4b and so). Funny example - any function that takes two 5 bit (and more) arguments in standart encoding takes only 4 transistor switching.
 
 ### Does it fits into thermal\timing characteristics
 One operation perfoms with **delay of two transistor switching**, plus memory, that allow to use frequency 4-8 Ghz. 
