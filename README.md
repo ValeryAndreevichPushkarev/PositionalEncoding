@@ -1,6 +1,6 @@
 ## Positional encoding basics
 
-Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat) **for any implemented function**. Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work (usage of OR element in ouptut). 
+Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat) **for any implemented function**. Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors more involved into work (usage of OR element in ouptut).
 
 ![add operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_add_module.png)
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
@@ -24,7 +24,7 @@ Total: About 20 petaOp Int4, compare with 1,2 petaOps on Nvidia Ampere, with acc
 about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need only 1 mbyte of sram, so 4 mbyte of sram isnt a big deal)
 
 
-### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 1 Ghz,  Cyclone IV,  optimized 60-nm low-power process):
+#### One block (2x4b input, 8b output) power consumption (Quartus PowerAnalyzer, 1 Ghz,  Cyclone IV,  optimized 60-nm low-power process):
 
 (may be not representative, in original schematics its about 50-100 times smaller)
 
@@ -45,12 +45,11 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 
 
 ### TODO:
-Add signed versions of commands (replace add\sub with one command. add, mul, div for 4 bit numbers).
 
 **Check other schematics to merge N-1 signals like OR (OR by current and so).**
-
-Add Floating point versions of commands (first n-th significant bits, exponentional part) or make separate module.
 
 Add modules to convert from/into positional encoding.
 
 Add script to generate 10-100 cores connected to one bus/memory block.
+
+Make properly worked core.
