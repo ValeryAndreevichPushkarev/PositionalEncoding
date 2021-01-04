@@ -26,7 +26,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 
 #### One block (2x4b input, 8b output) Frequency and power consumption (Quartus PowerAnalyzer,Cyclone IV, optimized 60-nm low-power process):
 
-**Fmax = 513 Mhz (Restricted Fmax 250 Mhz)**
+**Fmax = 577 Mhz (Restricted Fmax 250 Mhz) - Slow 85c model**
 
 (Data from Power Analyzer Tool, 1 Ghz, may be not representative, in original schematics its about 50-100 times smaller)
 **Total power - 0.45 mw**
