@@ -29,6 +29,7 @@ about 4 times more memory consumption. (BTW, to get petaOP on 1 Ghz you need onl
 **Fmax = 577 Mhz (Restricted Fmax 250 Mhz) - Slow 85c model**
 
 (Data from Power Analyzer Tool, 1 Ghz, may be not representative, in original schematics its about 50-100 times smaller)
+
 **Total power - 0.45 mw**
 
 **Dynamic power - 0.43 mW**
