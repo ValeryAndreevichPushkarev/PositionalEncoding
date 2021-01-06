@@ -47,7 +47,7 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 
 ### TODO:
 
-**Check other schematics to merge N-1 signals like OR (OR by current and so).**
+**Check other schematics to merge N-1 signals like OR (OR by current and so, in this type of scheme only one input in OR is active).**
 
 Add modules to convert from/into positional encoding.
 
