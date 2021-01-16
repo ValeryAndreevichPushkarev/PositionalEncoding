@@ -453,55 +453,6 @@ with open('output.txt', 'w') as file:
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
 
-
-#Write converter from binary to positional encoding 
-
-with open('output.txt', 'r') as file :
-  filedata = file.read()
-with open('output.txt', 'w') as file:
-	busLen = width
-	input_reg = width*(2**RecursionLevel)
-	output_reg = 2*input_reg
-	base_bitness = int(math.log(width,2))
-	header = """module converter_"""+str(target_MulAdd_bitness) +"""
-(
-	
-	input wire["""+ str(int(output_reg)-1)+""":0] r_res,
-	input wire["""+str(target_MulAdd_bitness-1)+""":0] r1_binary,
-	input wire["""+str(target_MulAdd_bitness-1)+""":0] r2_binary,
-	output wire["""+ str(int(input_reg)-1)+""":0] r1,
-	output wire["""+ str(int(input_reg)-1)+""":0] r2,
-	output wire["""+ str(2*target_MulAdd_bitness-1)+""":0] r_res_binary
-);
-"""
-	#convert binary to positional encoding
-	for i in range(2**RecursionLevel):
-		for j in range(width):
-			header = header + """
-	assign r1["""+str(i*width+j)+"""] = (r1_binary["""+str((i+1)*base_bitness-1)+""":"""+str((i)*base_bitness)+"""]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
-			
-	for i in range(2**RecursionLevel):
-		for j in range(width):
-			header = header + """
-	assign r2["""+str(i*width+j)+"""] = (r2_binary["""+str((i+1)*base_bitness-1)+""":"""+str((i)*base_bitness)+"""]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
-
-	#convert positional encoding to binary
-	header = header + """
-
-	assign r_res_binary = {"""
-	for i in reversed(range(output_reg/width)):
-		header = header + positionEncToBinary(width, "r_res",i*width) 
-
-		if (i!=0):
-			header = header + ",\r\n\r\n"
-		else:
-			header = header + "};\r\n"
-	#	for j in range(width):
-	print()					
-
-	header = header + "endmodule\r\n"
-	file.write(filedata + header)
-
 		
 #
 #Write module with specified number of computation units
