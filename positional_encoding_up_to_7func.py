@@ -2,13 +2,36 @@
 #width - numeric range for operation
 import math
 #command names
-op_names = ["add","sub","div","mul","pow","act_func","act_func_2_1"]
+op_names = ["add","mul","sub","div","pow","act_func","act_func_2_1"]
 #input registers
 width = 16;
 #maximum used commands in module (set to one for implement one function)
-op_count = 4;
+op_count = 2;
+
+#Specified if Intel quartus used, in that case module works from module_generator
+Quartus_used = False
+
 #Number of modules in one computation Unit (heght)
 NumOfModules = 20
+
+#Generate add\mul modules up to 32 bit
+GenerateMulAdd=0
+#Target bitness for superior IP core
+target_MulAdd_bitness = 16
+
+#variables for IP core generation
+RecursionLevel = int(math.log(target_MulAdd_bitness/math.log(width,2),2))
+baseBitness = int(math.log(width,2))
+
+
+print("Total delay in transistors switches in add "+str(target_MulAdd_bitness)+"b (approx): " + str(2**(RecursionLevel)))
+print("Total active logical elements in add : " + str(6**(RecursionLevel)))
+
+
+print("Total delay in transistors switches in mul "+str(target_MulAdd_bitness)+"b (approx): " + str(4**(RecursionLevel)))
+print("Total active logical elements in mul : " + str(14**(RecursionLevel)))
+
+
 #TODO:
 ##Number of Units in one computation Core (width)
 #NumOfUnits = 10
@@ -17,16 +40,32 @@ maxnum=width;
 output_width = 2*width;
 maxoutputnum = width*width;
 
+def positionEncToBinary(width, lineName,delta):
+	base_bitness = int(math.log(width,2))
+	formatStr = '{:0'+str(base_bitness)+'b}'
+	resultEq = ""
+
+	for j in range(base_bitness):
+		for i in range(2**base_bitness):
+			result = list(formatStr.format(i))
+			somethingToAdd = 0
+			if result[j] == '1':
+				somethingToAdd = 1
+				resultEq = resultEq + lineName+"["+str(i+delta)+"]"
+			if (i==2**base_bitness-1)&(somethingToAdd==1)&(j!=base_bitness-1):
+				resultEq = resultEq + ",\r\n"
+			else:
+				if (somethingToAdd == 1)&(i!=2**base_bitness-1):
+					resultEq = resultEq + "|"
+	return "{"+resultEq+"}"
+
 def op1(x, y):
 	return int(math.fmod(x+y,maxoutputnum))
 
 def op2(x, y):
-	if (x>=y):
-		return int(math.fmod(x-y,maxoutputnum))
-	else:
-		return 0;
-def op3(x, y):
 	return int(math.fmod(x*y,maxoutputnum))
+def op3(x, y):
+	return x*width+y
 
 def op4(x, y):
 	return int(math.fmod(x/(y+1),maxoutputnum))
@@ -69,9 +108,9 @@ for i in range(op_count):
 	header = header + "	input wire " + op_names[i] +",\r\n"
 
 header = header + """
-	input wire[""" +str(width)+ """:0] r1,
-	input wire[""" +str(width)+ """:0] r2,
-	output wire[""" +str(output_width)+ """:0] output_reg
+	input wire[""" +str(width-1)+ """:0] r1,
+	input wire[""" +str(width-1)+ """:0] r2,
+	output wire[""" +str(output_width-1)+ """:0] output_reg
 );
 """
 
@@ -196,28 +235,69 @@ with open('output.txt', 'w') as file:
 #
 #
 
-
 with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
 	busLen = width
 	header = """module module_generator_"""+op_names[0] +"""
 (
-	input wire clk,
-	output wire["""+str(2*width)+""":0] r_result
+	input wire clk,"""
+	if (Quartus_used):
+		header = header + """
+	input wire generator_use,
+	input wire ["""+str(op_count-1)+""":0] op_selector_data,
+	input wire ["""+str(width-1)+""":0] r1_data,
+	input wire ["""+str(width-1)+""":0] r2_data,
+	output wire ["""+str(2*width-1)+""":0] r_out,"""
+	header = header +"""
+	output wire["""+str(2*width-1)+""":0] r_result
 );
-reg["""+str(width)+""":0] r1=1'b1;
-reg["""+str(width)+""":0] r2=1'b1;
-reg["""+str(op_count)+""":0] op_selector=1'b0001;
-""" + op_names[0] +""" CM ("""
-	for i in range(op_count):
-		header = header + "op_selector["+str(i)+"],"
-	header = header + """r1,r2,r_result);"""
+reg["""+str(width-1)+""":0] r1=1'b1;
+reg["""+str(width-1)+""":0] r2=1'b1;
+reg["""+str(op_count-1)+""":0] op_selector=1'b0001;"""
+	if (Quartus_used):
+		header = header + """
+wire["""+str(width-1)+""":0] r1_input = {"""
+		for i in range(width):
+			header = header + """(r1["""+str(i)+"]&generator_use)|(r1_data["+str(i)+"]&(~generator_use))"""
+			if (i!= width-1):
+				header = header + ","
+			else:
+				header = header + "};\r\n"
+		header = header + """wire["""+str(width-1)+""":0] r2_input = {"""
+		for i in range(width):
+			header = header + """(r2["""+str(i)+"]&generator_use)|(r2_data["+str(i)+"]&!(~generator_use))"""
+			if (i!= width-1):
+				header = header + ","
+			else:
+				header = header + "};\r\n"
+
+		header = header + """wire["""+str(op_count-1)+""":0] op_selector_input = {"""
+		for i in range(op_count):
+				header = header + """(op_selector["""+str(i)+"]&generator_use)|(op_selector_data["+str(i)+"]&(~generator_use))"""
+				if (i!= op_count-1):
+					header = header + ","
+				else:
+					header = header + "};\r\n"
+	if (Quartus_used):
+		header = header + """
+	""" + op_names[0] +""" CM ("""
+		for i in range(op_count):
+			header = header + "op_selector_input["+str(i)+"],"
+		header = header + """r1_input,r2_input,r_result);"""
+	else:
+		header = header + """
+	""" + op_names[0] +""" CM ("""
+		for i in range(op_count):
+			header = header + "op_selector["+str(i)+"],"
+		header = header + """r1,r2,r_result);"""
 	#generate states for first op_selector
 
 
 	header = header + """
-always@(posedge clk)
+assign r_out = r_result;
+
+always@(posedge clk&generator_use)
 begin
 """
 	header = header + "	r1<={r1[0],"""
@@ -228,7 +308,6 @@ begin
 
 	header = header + "};"
 	header = header + """
-
 	if (r1["""+str(width-1)+"""]==1'b1)
 """
 	header = header + "		r2<={r2[0],"""
@@ -249,7 +328,6 @@ begin
 
 	header = header + "};"
 	header = header + """
-
 end
 """
 	
@@ -306,7 +384,6 @@ with open('output.txt', 'w') as file:
 	for i in range (NumOfModules):
 		if (i==0):
 			header = header + """
-
 always@(posedge clk)
 begin
 """
@@ -340,13 +417,109 @@ begin
 
 		header = header + "};"
 		header = header + """
-
 end
 """
 	
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
 
+
+#Write converter from binary to positional for base bitness
+
+with open('output.txt', 'r') as file :
+  filedata = file.read()
+with open('output.txt', 'w') as file:
+	busLen = width
+	input_reg = width*(2**RecursionLevel)
+	output_reg = 2*input_reg
+	base_bitness = int(math.log(width,2))
+	header = """module converter_"""+str(base_bitness) +"""
+(
+	
+	input wire["""+ str(int(2*width)-1)+""":0] r_res,
+	input wire["""+str(base_bitness-1)+""":0] r1_binary,
+	input wire["""+str(base_bitness-1)+""":0] r2_binary,
+	output wire["""+ str(int(width)-1)+""":0] r1,
+	output wire["""+ str(int(width)-1)+""":0] r2,
+	output wire["""+ str(2*base_bitness-1)+""":0] r_res_binary
+);
+"""
+	#convert binary to positional encoding
+	for j in range(width):
+			header = header + """
+	assign r1["""+str(j)+"""] = (r1_binary["""+str(base_bitness-1)+""":0]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+			
+
+	for j in range(width):
+			header = header + """
+	assign r2["""+str(j)+"""] = (r2_binary["""+str(base_bitness-1)+""":0]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+
+	#convert positional encoding to binary
+	header = header + """
+
+	assign r_res_binary = {"""
+
+	for i in reversed(range(2)):
+		header = header + positionEncToBinary(width, "r_res", i*width) 
+		if (i!=0):
+			header = header + ",\r\n\r\n"
+		else:
+			header = header + "};\r\n"
+	
+
+	header = header + "endmodule\r\n"
+	file.write(filedata + header)
+
+
+#Write converter from binary to positional encoding 
+
+with open('output.txt', 'r') as file :
+  filedata = file.read()
+with open('output.txt', 'w') as file:
+	busLen = width
+	input_reg = width*(2**RecursionLevel)
+	output_reg = 2*input_reg
+	base_bitness = int(math.log(width,2))
+	header = """module converter_"""+str(target_MulAdd_bitness) +"""
+(
+	
+	input wire["""+ str(int(output_reg)-1)+""":0] r_res,
+	input wire["""+str(target_MulAdd_bitness-1)+""":0] r1_binary,
+	input wire["""+str(target_MulAdd_bitness-1)+""":0] r2_binary,
+	output wire["""+ str(int(input_reg)-1)+""":0] r1,
+	output wire["""+ str(int(input_reg)-1)+""":0] r2,
+	output wire["""+ str(2*target_MulAdd_bitness-1)+""":0] r_res_binary
+);
+"""
+	#convert binary to positional encoding
+	for i in range(2**RecursionLevel):
+		for j in range(width):
+			header = header + """
+	assign r1["""+str(i*width+j)+"""] = (r1_binary["""+str((i+1)*base_bitness-1)+""":"""+str((i)*base_bitness)+"""]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+			
+	for i in range(2**RecursionLevel):
+		for j in range(width):
+			header = header + """
+	assign r2["""+str(i*width+j)+"""] = (r2_binary["""+str((i+1)*base_bitness-1)+""":"""+str((i)*base_bitness)+"""]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+
+	#convert positional encoding to binary
+	header = header + """
+
+	assign r_res_binary = {"""
+	for i in reversed(range(output_reg/width)):
+		header = header + positionEncToBinary(width, "r_res",i*width) 
+
+		if (i!=0):
+			header = header + ",\r\n\r\n"
+		else:
+			header = header + "};\r\n"
+	#	for j in range(width):
+	print()					
+
+	header = header + "endmodule\r\n"
+	file.write(filedata + header)
+
+		
 #
 #Write module with specified number of computation units
 #
