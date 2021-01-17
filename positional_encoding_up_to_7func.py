@@ -406,16 +406,18 @@ end
 	header = header + "endmodule\r\n"
 	file.write(filedata + header)
 
-
 #Write converter from binary to positional for base bitness
-
 with open('output.txt', 'r') as file :
   filedata = file.read()
 with open('output.txt', 'w') as file:
 	busLen = width
+
 	input_reg = width*(2**RecursionLevel)
 	output_reg = 2*input_reg
 	base_bitness = int(math.log(width,2))
+
+	formatStr = '{:0'+str(base_bitness)+'b}'
+
 	header = """module converter_"""+str(base_bitness) +"""
 (
 	
@@ -430,12 +432,12 @@ with open('output.txt', 'w') as file:
 	#convert binary to positional encoding
 	for j in range(width):
 			header = header + """
-	assign r1["""+str(j)+"""] = (r1_binary["""+str(base_bitness-1)+""":0]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+	assign r1["""+str(j)+"""] = (r1_binary["""+str(base_bitness-1)+""":0]=="""+str(base_bitness)+"""'b"""+formatStr.format(j)+""") ?1'b1:1'b0;"""
 			
 
 	for j in range(width):
 			header = header + """
-	assign r2["""+str(j)+"""] = (r2_binary["""+str(base_bitness-1)+""":0]==2'd"""+str(j)+""") ?1'b1:1'b0;"""
+	assign r2["""+str(j)+"""] = (r2_binary["""+str(base_bitness-1)+""":0]=="""+str(base_bitness)+"""'b"""+formatStr.format(j)+""") ?1'b1:1'b0;"""
 
 	#convert positional encoding to binary
 	header = header + """
@@ -451,6 +453,7 @@ with open('output.txt', 'w') as file:
 	
 
 	header = header + "endmodule\r\n"
+	file.write(filedata + header)
 	file.write(filedata + header)
 
 		
