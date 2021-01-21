@@ -8,7 +8,7 @@ Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements co
 Power equivalent of that scheme **is about 1-2 logical elements**, or 2-4 transistors with delay of two (AND element to determine state, OR in output circuit (or electrical equivalence)).
 Computing with standard encoding takes 87 LE with about 4 logical blocks each with 2-3 transistors, its about 300 with activation factor 0,5 for multipler 4bx4b=8b. Or at least more than two logical elements.
 
-Also such type of scheme **reduces memory load by two** (for 4b scheme, only 4 output bits change its value instead of ~8 in standard encoding).
+Also such type of scheme **reduces memory load by two** (for 4b scheme (8b output), only 4 output bits change its value instead of ~8 in standard encoding).
 
 Transistor usage of the scheme is about the same.
 
