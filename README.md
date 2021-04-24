@@ -19,7 +19,7 @@ One operation performs with **delay of two transistor switching**, plus memory, 
 
 One 4x4 bit module takes about 500-700 transistors on chip, 4 of them involved into work, that allows it to get more than 10 million modules on a 22 billion transistor chip. (On more than 1 Ghz).
 
-Total: About 20 petaOp Int4, compared with 1,2 petaOps on Nvidia Ampere, with acceptable power dissipation.
+Total: About 20 petaOp Int4, compared with ~8 petaOps on Nvidia Hopper, with acceptable power dissipation.
 
 
 ### Minuses 
@@ -45,7 +45,7 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 
 (TPD: switching of transistors in SRAM, and 40-80m transistors in computation module)
 
-(compare with 1,2 petaOps on Nvidia Ampere)
+(compare with ~ 8 petaOps on Nvidia Hopper)
 
 
 ### TODO:
