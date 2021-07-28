@@ -55,3 +55,5 @@ To utilize 22b transistor chip - 20 petaOp on 1 Ghz, or 80-160petaOp on 4-8 Ghz 
 Add script to generate 10-100 cores connected to one bus/memory block.
 
 Make properly worked core for fp/int 8-16-32.
+
+Note that this encoding is positional only in **debug** purposes.
