@@ -1,6 +1,8 @@
 ## Positional encoding basics
 
-Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat) **for any implemented function**. Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors are more involved in work (usage of OR element in output).
+Positional encoding (0- 0001, 1-0010, 2-0100) used to reduce logical elements count (and heat) **for any implemented function**. 
+Input states represented as a One-of-N bit flag.
+Input state is fully determined by work of only 2 transistors (& element). Output state has 1-1 representation, so one-two transistors are more involved in work (usage of OR element in output).
 
 ![add operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_add_module.png)
 ![mul operation](https://raw.githubusercontent.com/ValeryAndreevichPushkarev/PositionalEncoding/main/PositionalEncoding_3b_mul_module.png)
